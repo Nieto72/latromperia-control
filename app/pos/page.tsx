@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
@@ -22,7 +23,7 @@ const ADDITIONS = [
   { id: "queso", name: "Queso", price: 2000 },
   { id: "tocineta", name: "Tocineta", price: 3000 },
   { id: "jalapenos", name: "Jalapeños", price: 1000 },
-  { id: "pepinillos", name: "Pepinillos", price: 1000 }, // ✅ NUEVO
+  { id: "pepinillos", name: "Pepinillos", price: 1000 },
   { id: "salsa_extra", name: "Salsa extra", price: 500 },
 ] as const;
 
@@ -113,17 +114,83 @@ export default function POSPage() {
   };
 
   return (
-    <div style={{ padding: 16, maxWidth: 1100, margin: "0 auto" }}>
+    <div className="posWrap" style={{ padding: 16 }}>
+      {/* CSS responsive real */}
+      <style jsx global>{`
+        .posWrap {
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+
+        .posGrid {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 16px;
+          margin-top: 16px;
+          align-items: start;
+        }
+
+        /* CEL: stack (Productos arriba, Pedido abajo) */
+        @media (max-width: 820px) {
+          .posGrid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .card {
+          border: 1px solid #333;
+          border-radius: 16px;
+          padding: 12px;
+          background: transparent;
+        }
+
+        .productsGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        /* CEL: botones más cómodos, sigue en 2 columnas pero respirando */
+        @media (max-width: 420px) {
+          .productsGrid {
+            gap: 8px;
+          }
+          .btnProduct {
+            padding: 10px;
+            border-radius: 14px;
+          }
+        }
+
+        /* CEL: zona de acciones pegada abajo para rapidez */
+        .actionsBar {
+          display: flex;
+          gap: 10px;
+          margin-top: 14px;
+        }
+
+        @media (max-width: 820px) {
+          .actionsBar {
+            position: sticky;
+            bottom: 10px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 10px;
+            border-radius: 16px;
+            border: 1px solid #333;
+          }
+        }
+      `}</style>
+
       <h1 style={{ margin: 0 }}>POS — Caja</h1>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: 16, marginTop: 16 }}>
+      <div className="posGrid">
         {/* Productos */}
-        <div style={{ border: "1px solid #ddd", borderRadius: 16, padding: 12 }}>
+        <div className="card">
           <h2 style={{ marginTop: 0 }}>Productos</h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10 }}>
+          <div className="productsGrid">
             {PRODUCTS.map((p) => (
-              <button key={p.id} onClick={() => addProduct(p)} style={productBtn}>
+              <button key={p.id} onClick={() => addProduct(p)} style={productBtn} className="btnProduct">
                 <div style={{ fontWeight: 900, color: "#000" }}>{p.name}</div>
                 <div style={{ color: "#000", opacity: 0.75 }}>${p.price.toLocaleString("es-CO")}</div>
               </button>
@@ -132,7 +199,7 @@ export default function POSPage() {
         </div>
 
         {/* Pedido */}
-        <div style={{ border: "1px solid #ddd", borderRadius: 16, padding: 12 }}>
+        <div className="card">
           <h2 style={{ marginTop: 0 }}>Pedido</h2>
 
           {/* Tipo de orden */}
@@ -151,7 +218,6 @@ export default function POSPage() {
               Para llevar
             </button>
 
-            {/* ✅ Adiciones resaltado */}
             <button
               onClick={() => setAddOpen(true)}
               style={{ ...pillBtn, marginLeft: "auto", background: "#fff", color: "#000" }}
@@ -226,7 +292,7 @@ export default function POSPage() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+          <div className="actionsBar">
             <button onClick={clear} style={{ ...actionBtn, fontWeight: 900 }}>
               Borrar
             </button>
@@ -296,7 +362,7 @@ export default function POSPage() {
 
 /* ====== styles ====== */
 
-const productBtn: React.CSSProperties = {
+const productBtn: CSSProperties = {
   padding: 12,
   borderRadius: 14,
   border: "1px solid #333",
@@ -306,7 +372,7 @@ const productBtn: React.CSSProperties = {
   textAlign: "left",
 };
 
-const payBtn: React.CSSProperties = {
+const payBtn: CSSProperties = {
   padding: "10px 12px",
   borderRadius: 14,
   border: "1px solid #333",
@@ -316,7 +382,7 @@ const payBtn: React.CSSProperties = {
   fontWeight: 900,
 };
 
-const pillBtn: React.CSSProperties = {
+const pillBtn: CSSProperties = {
   padding: "10px 14px",
   borderRadius: 999,
   border: "1px solid #333",
@@ -326,12 +392,12 @@ const pillBtn: React.CSSProperties = {
   fontWeight: 900,
 };
 
-const pillActive: React.CSSProperties = {
+const pillActive: CSSProperties = {
   background: "#fff",
   color: "#000",
 };
 
-const actionBtn: React.CSSProperties = {
+const actionBtn: CSSProperties = {
   flex: 1,
   padding: 12,
   borderRadius: 14,
@@ -341,7 +407,7 @@ const actionBtn: React.CSSProperties = {
   cursor: "pointer",
 };
 
-const minusBtn: React.CSSProperties = {
+const minusBtn: CSSProperties = {
   border: "1px solid #333",
   borderRadius: 12,
   padding: "8px 10px",
@@ -351,7 +417,7 @@ const minusBtn: React.CSSProperties = {
   fontWeight: 900,
 };
 
-const modalOverlay: React.CSSProperties = {
+const modalOverlay: CSSProperties = {
   position: "fixed",
   inset: 0,
   background: "rgba(0,0,0,0.55)",
@@ -362,7 +428,7 @@ const modalOverlay: React.CSSProperties = {
   zIndex: 9999,
 };
 
-const modalCard: React.CSSProperties = {
+const modalCard: CSSProperties = {
   width: "min(720px, 96vw)",
   background: "#fff",
   color: "#000",
@@ -371,7 +437,7 @@ const modalCard: React.CSSProperties = {
   padding: 14,
 };
 
-const closeBtn: React.CSSProperties = {
+const closeBtn: CSSProperties = {
   padding: "8px 10px",
   borderRadius: 12,
   border: "1px solid #333",
