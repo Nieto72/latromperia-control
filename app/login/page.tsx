@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import type { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
-import { auth, db } from "../lib/firebase";
+import { auth } from "../lib/firebase";
+import { fetchUserProfile } from "../lib/users";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,28 +27,20 @@ export default function LoginPage() {
       const uid = cred.user.uid;
 
       // 2) Buscar perfil del usuario en Firestore
-      const ref = doc(db, "users", uid);
-      const snap = await getDoc(ref);
-
-      if (!snap.exists()) {
+      const profile = await fetchUserProfile(uid);
+      if (!profile) {
         setError("Tu usuario no tiene perfil en Firestore (users).");
         return;
       }
 
-      const userData = snap.data();
-
       // 3) Validar activo (boolean o string por seguridad)
-      const isActive =
-        userData?.isActive === true || userData?.isActive === "true";
-
-      if (!isActive) {
+      if (!profile.isActive) {
         setError("Usuario desactivado. Contacta al administrador.");
         return;
       }
 
       // 4) Redirigir según rol
-      const role = userData?.role;
-
+      const role = profile.role;
       if (role === "admin") {
         router.replace("/dashboard");
       } else if (role === "cashier") {
@@ -55,10 +48,11 @@ export default function LoginPage() {
       } else {
         setError("Rol no válido en Firestore.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       // ✅ Mostrar error real para diagnosticar
-      const code = err?.code || "error";
-      const msg = err?.message || "Fallo al iniciar sesión";
+      const fbErr = err as FirebaseError | null;
+      const code = fbErr?.code || "error";
+      const msg = fbErr?.message || "Fallo al iniciar sesión";
       setError(`${code} — ${msg}`);
     } finally {
       setLoading(false);

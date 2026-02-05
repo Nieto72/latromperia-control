@@ -1,0 +1,134 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function isActiveUser() {
+      return isSignedIn()
+        && (
+          userDoc(request.auth.uid).data.isActive == true
+          || userDoc(request.auth.uid).data.isActive == "true"
+        );
+    }
+
+    function userRole() {
+      return userDoc(request.auth.uid).data.role;
+    }
+
+    function isAdmin() {
+      return isActiveUser() && userRole() == "admin";
+    }
+
+    function isCashier() {
+      return isActiveUser() && userRole() == "cashier";
+    }
+
+    function isStaff() {
+      return isAdmin() || isCashier();
+    }
+
+    match /users/{uid} {
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      function isOwner() {
+        return resource.data.createdBy == request.auth.uid;
+      }
+
+      function isCreatingOwnOrder() {
+        return request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.status == "open"
+          && request.resource.data.label is string
+          && request.resource.data.orderType in ["aqui", "llevar"]
+          && request.resource.data.items is list
+          && request.resource.data.additions is list
+          && request.resource.data.total is number;
+      }
+
+      function isEditingOpenOrder() {
+        return resource.data.status == "open"
+          && request.resource.data.status == "open"
+          && request.resource.data.createdBy == resource.data.createdBy
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.orderType in ["aqui", "llevar"]
+          && request.resource.data.items is list
+          && request.resource.data.additions is list
+          && request.resource.data.total is number;
+      }
+
+      function isClosingOrder() {
+        return resource.data.status == "open"
+          && request.resource.data.status == "closed"
+          && request.resource.data.createdBy == resource.data.createdBy
+          && request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.label == resource.data.label
+          && request.resource.data.orderType == resource.data.orderType
+          && request.resource.data.items == resource.data.items
+          && request.resource.data.additions == resource.data.additions
+          && request.resource.data.total == resource.data.total;
+      }
+
+      allow read: if isAdmin() || (isCashier() && isOwner());
+      allow create: if isStaff() && isCreatingOwnOrder();
+      allow update: if isAdmin() || (isCashier() && isOwner() && (isEditingOpenOrder() || isClosingOrder()));
+      allow delete: if isAdmin();
+    }
+
+    match /sales/{saleId} {
+      function isCreatingOwnSale() {
+        return request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.orderId is string
+          && request.resource.data.label is string
+          && request.resource.data.items is list
+          && request.resource.data.additions is list
+          && request.resource.data.total is number
+          && request.resource.data.payMethod in ["Efectivo", "Nequi", "Transferencia"]
+          && request.resource.data.orderType in ["aqui", "llevar"]
+          && request.resource.data.ticketNumber is number;
+      }
+
+      allow read: if isAdmin() || (isCashier() && resource.data.createdBy == request.auth.uid);
+      allow create: if isStaff() && isCreatingOwnSale();
+      allow update, delete: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if isStaff();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /ingredients/{ingredientId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    match /recipes/{recipeId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    match /expenses/{expenseId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    match /counters/{counterId} {
+      allow read: if isStaff();
+      allow create: if isStaff() && request.resource.data.value is number && request.resource.data.value == 1;
+      allow update: if isStaff()
+        && request.resource.data.value is number
+        && request.resource.data.value == resource.data.value + 1;
+      allow delete: if isAdmin();
+    }
+
+    match /inventory/{movementId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+  }
+}

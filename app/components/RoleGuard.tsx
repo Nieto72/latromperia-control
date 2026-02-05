@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../lib/firebase"; // ajusta ruta si tu firebase.ts está en otro lado
-
-type Role = "admin" | "cashier";
+import { useAuth } from "./AuthProvider";
+import type { Role } from "../lib/types";
 
 export default function RoleGuard({
   allowed,
@@ -16,49 +13,41 @@ export default function RoleGuard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const { user, profile, role, isActive, loading } = useAuth();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        router.replace("/login");
-        return;
-      }
+    if (loading) return;
 
-      // leemos el usuario desde Firestore: users/{uid}
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
 
-      if (!snap.exists()) {
-        router.replace("/login");
-        return;
-      }
+    if (!profile) {
+      router.replace("/login");
+      return;
+    }
 
-      const userData = snap.data();
+    if (!isActive) {
+      router.replace("/login");
+      return;
+    }
 
-      // ✅ normalizamos isActive por seguridad (puede venir boolean o string)
-      const isActive =
-        userData?.isActive === true || userData?.isActive === "true";
+    if (!role) {
+      router.replace("/login");
+      return;
+    }
 
-      if (!isActive) {
-        router.replace("/login");
-        return;
-      }
+    if (!allowed.includes(role)) {
+      router.replace(role === "admin" ? "/dashboard" : "/pos");
+      return;
+    }
+  }, [allowed, isActive, loading, profile, role, router, user]);
 
-      const role = (userData?.role || "") as Role;
-
-      if (!allowed.includes(role)) {
-        router.replace(role === "admin" ? "/dashboard" : "/pos");
-        return;
-      }
-
-      setLoading(false);
-    });
-
-    return () => unsub();
-  }, [router, allowed]);
+  const isAllowed = !!user && !!profile && isActive && !!role && allowed.includes(role);
 
   if (loading) return <div style={{ padding: 20 }}>Cargando...</div>;
+  if (!isAllowed) return <div style={{ padding: 20 }}>Redirigiendo...</div>;
 
   return <>{children}</>;
 }

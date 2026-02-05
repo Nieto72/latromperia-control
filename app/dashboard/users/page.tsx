@@ -1,48 +1,37 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 
-type Role = "admin" | "cashier";
-
-type UserDoc = {
-  displayName?: string;
-  role?: Role;
-  isActive?: boolean | "true" | "false";
-};
+import type { Role, UserDoc } from "../../lib/types";
+import { normalizeIsActive } from "../../lib/types";
 
 export default function UsersPage() {
   const [users, setUsers] = useState<{ id: string; data: UserDoc }[]>([]);
   const [loading, setLoading] = useState(true);
   const [msg, setMsg] = useState("");
 
-  const load = async () => {
-    setLoading(true);
-    const snap = await getDocs(collection(db, "users"));
-    const list = snap.docs.map((d) => ({ id: d.id, data: d.data() as UserDoc }));
-    setUsers(list);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    load();
-  }, []);
+    const unsubscribe = onSnapshot(collection(db, "users"), (snap) => {
+      const list = snap.docs.map((d) => ({ id: d.id, data: d.data() as UserDoc }));
+      setUsers(list);
+      setLoading(false);
+    });
 
-  const normalizeIsActive = (v: UserDoc["isActive"]) => v === true || v === "true";
+    return () => unsubscribe();
+  }, []);
 
   const toggleActive = async (uid: string, current: boolean) => {
     setMsg("");
     await updateDoc(doc(db, "users", uid), { isActive: !current });
     setMsg("Listo ✅ usuario actualizado");
-    load();
   };
 
   const setRole = async (uid: string, role: Role) => {
     setMsg("");
     await updateDoc(doc(db, "users", uid), { role });
     setMsg("Rol actualizado ✅");
-    load();
   };
 
   if (loading) return <div style={{ padding: 24 }}>Cargando...</div>;
