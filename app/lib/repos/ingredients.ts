@@ -31,7 +31,7 @@ export async function createIngredient(input: CreateIngredientInput): Promise<vo
     name: input.name.trim(),
     unit: input.unit,
     category: input.category ?? "",
-    costPerUnit: input.costPerUnit ?? null,
+    costPerUnit: input.costPerUnit ?? undefined,
     minStock: input.minStock ?? 0,
     stock: 0,
     isActive: true,
