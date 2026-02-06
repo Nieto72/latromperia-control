@@ -165,16 +165,15 @@ export default function POSPage() {
         status: "open",
         label: cleanLabel,
         orderType, // ✅ clave para rules (y para tenerlo guardado)
-        items: [],
-        additions: [],
-        total: 0,
+        items: cart,
+        additions,
+        total,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         createdBy: uid,
       });
 
       setOrderId(res.id);
-      clearLocal();
       await loadOpenOrders();
       alert(`Pedido abierto ✅ (${cleanLabel})`);
     } catch {
