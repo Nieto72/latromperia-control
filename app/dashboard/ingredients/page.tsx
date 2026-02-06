@@ -186,7 +186,7 @@ export default function IngredientsPage() {
             name: seed.name,
             unit: seed.unit,
             category: seed.category,
-            costPerUnit: seed.costPerUnit ?? null,
+            costPerUnit: seed.costPerUnit ?? undefined,
             minStock: seed.minStock,
             isActive: true,
           });
