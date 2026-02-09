@@ -393,7 +393,7 @@ export default function POSPage() {
             gap:10px;
             position: sticky;
             bottom: 10px;
-            background: rgba(19,19,26,0.92);
+            background: rgba(255,255,255,0.92);
             backdrop-filter: blur(10px);
             padding: 12px;
             border-radius: 16px;
@@ -774,7 +774,7 @@ const actionBtn: CSSProperties = {
   background: "var(--accent)",
   color: "#0b0b0f",
   cursor: "pointer",
-  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
+  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.2)",
 };
 
 const minusBtn: CSSProperties = {

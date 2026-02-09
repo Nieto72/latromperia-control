@@ -584,8 +584,8 @@ const pillStyle: React.CSSProperties = {
 };
 
 const warningStyle: React.CSSProperties = {
-  border: "1px solid rgba(255, 90, 95, 0.45)",
-  background: "rgba(255, 90, 95, 0.12)",
+  border: "1px solid rgba(255, 90, 95, 0.4)",
+  background: "rgba(255, 90, 95, 0.08)",
   borderRadius: 14,
   padding: 12,
 };
@@ -599,7 +599,7 @@ const barRow: React.CSSProperties = {
 
 const barWrap: React.CSSProperties = {
   height: 8,
-  background: "rgba(255,255,255,0.08)",
+  background: "rgba(0,0,0,0.08)",
   borderRadius: 999,
   overflow: "hidden",
 };
