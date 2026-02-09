@@ -441,7 +441,25 @@ export default function POSPage() {
         }
       `}</style>
 
-      <h1 style={{ margin: 0 }}>POS — Pedidos abiertos</h1>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+        <h1 style={{ margin: 0 }}>POS — Pedidos abiertos</h1>
+        <div
+          style={{
+            width: 46,
+            height: 46,
+            borderRadius: 999,
+            border: "1px solid var(--border)",
+            background: "rgba(255,255,255,0.7)",
+            boxShadow: "0 10px 20px rgba(0,0,0,0.18)",
+            display: "grid",
+            placeItems: "center",
+            overflow: "hidden",
+            flexShrink: 0,
+          }}
+        >
+          <img src="/tromperia-logo.png" alt="La Trompería" style={{ width: 36, height: 36, objectFit: "contain" }} />
+        </div>
+      </div>
 
       <div className="topBar">
         <input
@@ -538,9 +556,7 @@ export default function POSPage() {
 
           {!isOrderOpen && null}
 
-          {cart.length === 0 && additions.length === 0 ? (
-            <p style={{ opacity: 0.7 }}>Agrega productos para iniciar.</p>
-          ) : (
+          {cart.length === 0 && additions.length === 0 ? null : (
             <div style={{ display: "grid", gap: 10 }}>
               {cart.map((it) => (
                 <div key={it.id} style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
