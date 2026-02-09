@@ -223,12 +223,13 @@ const cardStyle: React.CSSProperties = {
   width: 280,
   padding: 16,
   borderRadius: 18,
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
+  background: "var(--card)",
   textDecoration: "none",
 };
 
 const goalCardStyle: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 18,
   padding: 16,
   marginBottom: 18,
@@ -237,4 +238,5 @@ const goalCardStyle: React.CSSProperties = {
   justifyContent: "space-between",
   gap: 12,
   flexWrap: "wrap",
+  background: "linear-gradient(135deg, rgba(255, 90, 95, 0.15), rgba(255, 209, 102, 0.12))",
 };

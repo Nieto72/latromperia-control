@@ -365,7 +365,7 @@ export default function POSPage() {
 
         @media (max-width: 820px) { .posGrid { grid-template-columns: 1fr; } }
 
-        .card { border: 1px solid #333; border-radius: 16px; padding: 12px; background: transparent; }
+        .card { border: 1px solid var(--border); border-radius: 16px; padding: 12px; background: var(--card); }
 
         .productsGrid {
           display: grid;
@@ -393,34 +393,34 @@ export default function POSPage() {
             gap:10px;
             position: sticky;
             bottom: 10px;
-            background: rgba(0,0,0,0.78);
+            background: rgba(19,19,26,0.92);
             backdrop-filter: blur(10px);
             padding: 12px;
             border-radius: 16px;
-            border: 1px solid #333;
+            border: 1px solid var(--border);
             margin-top: 14px;
             z-index: 50;
           }
-          .mobileTotal { display:flex; justify-content:space-between; font-weight:900; font-size:18px; color:#fff; }
+          .mobileTotal { display:flex; justify-content:space-between; font-weight:900; font-size:18px; color:var(--foreground); }
           .mobilePay { display:flex; gap:8px; flex-wrap:wrap; }
           .mobilePay button{
             flex:1;
             min-width: 110px;
             padding:10px 12px;
             border-radius:14px;
-            border:1px solid #333;
-            background:#fff;
-            color:#000;
+            border:1px solid var(--border);
+            background: var(--card);
+            color: var(--foreground);
             font-weight:900;
           }
-          .mobilePay button.payActive{ background:#f1f1f1; }
+          .mobilePay button.payActive{ background: var(--accent); color:#0b0b0f; }
           .payMain{
             width:100%;
             padding:14px;
             border-radius:14px;
-            border:1px solid #333;
-            background:#fff;
-            color:#000;
+            border:1px solid var(--border);
+            background: var(--accent);
+            color:#0b0b0f;
             font-weight:900;
             font-size:16px;
           }
@@ -433,10 +433,10 @@ export default function POSPage() {
         }
         .modalCard{
           width: min(720px, 96vw);
-          background:#fff;
-          color:#000;
+          background: var(--card);
+          color: var(--foreground);
           border-radius:16px;
-          border:1px solid #ddd;
+          border:1px solid var(--border);
           padding:14px;
         }
       `}</style>
@@ -521,8 +521,8 @@ export default function POSPage() {
             ) : (
               products.map((p) => (
                 <button key={p.id} onClick={() => addProduct(p)} style={productBtn} className="btnProduct">
-                  <div style={{ fontWeight: 900, color: "#000" }}>{p.name}</div>
-                  <div style={{ color: "#000", opacity: 0.75 }}>${p.price.toLocaleString("es-CO")}</div>
+                <div style={{ fontWeight: 900, color: "var(--foreground)" }}>{p.name}</div>
+                <div style={{ color: "var(--foreground)", opacity: 0.75 }}>${p.price.toLocaleString("es-CO")}</div>
                 </button>
               ))
             )}
@@ -659,8 +659,8 @@ export default function POSPage() {
               ) : (
                 additionsCatalog.map((a) => (
                   <button key={a.id} onClick={() => addAddition(a)} style={productBtn}>
-                    <div style={{ fontWeight: 900, color: "#000" }}>{a.name}</div>
-                    <div style={{ color: "#000", opacity: 0.75 }}>+ ${a.price.toLocaleString("es-CO")}</div>
+                  <div style={{ fontWeight: 900, color: "var(--foreground)" }}>{a.name}</div>
+                  <div style={{ color: "var(--foreground)", opacity: 0.75 }}>+ ${a.price.toLocaleString("es-CO")}</div>
                   </button>
                 ))
               )}
@@ -703,16 +703,16 @@ export default function POSPage() {
                       border: "1px solid #333",
                       borderRadius: 14,
                       padding: 12,
-                      background: "#fff",
+                    background: "var(--card)",
                       textAlign: "left",
                       cursor: "pointer",
                     }}
                   >
-                    <div style={{ fontWeight: 900, color: "#000" }}>{o.label}</div>
-                    <div style={{ opacity: 0.8, color: "#000" }}>
+                    <div style={{ fontWeight: 900, color: "var(--foreground)" }}>{o.label}</div>
+                    <div style={{ opacity: 0.8, color: "var(--foreground)" }}>
                       Total: ${o.total.toLocaleString("es-CO")} • Items: {(o.items?.length || 0) + (o.additions?.length || 0)}
                     </div>
-                    <div style={{ opacity: 0.6, color: "#000", fontSize: 12 }}>
+                    <div style={{ opacity: 0.6, color: "var(--foreground)", fontSize: 12 }}>
                       ID: {o.id.slice(0, 10)}...
                     </div>
                   </button>
@@ -731,9 +731,9 @@ export default function POSPage() {
 const productBtn: CSSProperties = {
   padding: 12,
   borderRadius: 14,
-  border: "1px solid #333",
-  background: "#fff",
-  color: "#000",
+  border: "1px solid var(--border)",
+  background: "var(--card)",
+  color: "var(--foreground)",
   cursor: "pointer",
   textAlign: "left",
 };
@@ -741,9 +741,9 @@ const productBtn: CSSProperties = {
 const payBtn: CSSProperties = {
   padding: "10px 12px",
   borderRadius: 14,
-  border: "1px solid #333",
-  background: "#fff",
-  color: "#000",
+  border: "1px solid var(--border)",
+  background: "var(--card)",
+  color: "var(--foreground)",
   cursor: "pointer",
   fontWeight: 900,
 };
@@ -751,43 +751,43 @@ const payBtn: CSSProperties = {
 const pillBtn: CSSProperties = {
   padding: "10px 14px",
   borderRadius: 999,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   background: "transparent",
-  color: "#000",
+  color: "var(--foreground)",
   cursor: "pointer",
   fontWeight: 900,
 };
 
 const pillActive: CSSProperties = {
-  background: "#fff",
-  color: "#000",
+  background: "var(--accent)",
+  color: "#0b0b0f",
 };
 
 const actionBtn: CSSProperties = {
   padding: 12,
   borderRadius: 14,
-  border: "1px solid #333",
-  background: "#fff",
-  color: "#000",
+  border: "1px solid var(--border)",
+  background: "var(--accent)",
+  color: "#0b0b0f",
   cursor: "pointer",
 };
 
 const minusBtn: CSSProperties = {
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   borderRadius: 12,
   padding: "8px 10px",
   cursor: "pointer",
-  background: "#fff",
-  color: "#000",
+  background: "var(--card)",
+  color: "var(--foreground)",
   fontWeight: 900,
 };
 
 const closeBtn: CSSProperties = {
   padding: "8px 10px",
   borderRadius: 12,
-  border: "1px solid #333",
-  background: "#fff",
+  border: "1px solid var(--border)",
+  background: "var(--card)",
   cursor: "pointer",
   fontWeight: 900,
-  color: "#000",
+  color: "var(--foreground)",
 };
