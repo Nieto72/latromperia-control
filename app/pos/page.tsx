@@ -536,12 +536,7 @@ export default function POSPage() {
             Pedido {isOrderOpen ? `— ${label || "(sin nombre)"}` : "— (sin abrir)"}
           </h2>
 
-          {!isOrderOpen && (
-            <p style={{ opacity: 0.8, marginTop: 8 }}>
-              1) Escribe el nombre arriba → 2) <b>Abrir pedido</b> → 3) agrega productos → 4) cuando pidan cuenta:{" "}
-              <b>PAGAR</b>
-            </p>
-          )}
+          {!isOrderOpen && null}
 
           {cart.length === 0 && additions.length === 0 ? (
             <p style={{ opacity: 0.7 }}>Agrega productos para iniciar.</p>
