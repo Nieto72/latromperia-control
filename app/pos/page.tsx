@@ -734,7 +734,7 @@ const productBtn: CSSProperties = {
   padding: 12,
   borderRadius: 14,
   border: "1px solid var(--border)",
-  background: "var(--card)",
+  background: "linear-gradient(180deg, rgba(255, 209, 102, 0.55), rgba(255, 209, 102, 0.25))",
   color: "var(--foreground)",
   cursor: "pointer",
   textAlign: "left",
