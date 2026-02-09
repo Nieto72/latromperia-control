@@ -346,7 +346,7 @@ export default function RecipesPage() {
         </p>
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Selecciona un producto</h3>
         <select
           value={selectedProductId}
@@ -364,7 +364,7 @@ export default function RecipesPage() {
         </select>
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Ingredientes</h3>
         {loadingRecipe ? (
           <p>Cargando receta...</p>
@@ -423,7 +423,7 @@ export default function RecipesPage() {
         )}
       </div>
 
-      <div style={{ border: "1px dashed #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ border: "1px dashed var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ marginTop: 0 }}>Carga inicial</h3>
         <p style={{ opacity: 0.8, marginTop: 4 }}>
           Carga recetas base para el menú actual. Si algo falta, se mostrará en el mensaje.
@@ -440,37 +440,39 @@ export default function RecipesPage() {
 const inputStyle: React.CSSProperties = {
   padding: 10,
   borderRadius: 10,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
 };
 
 const buttonStyle: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   fontWeight: 700,
-  background: "white",
-  color: "#000",
+  background: "var(--accent)",
+  color: "#0b0b0f",
   cursor: "pointer",
   width: "fit-content",
+  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
 };
 
 const secondaryButton: React.CSSProperties = {
   padding: "8px 12px",
   borderRadius: 10,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
   cursor: "pointer",
 };
 
 const rowStyle: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 12,
   padding: 10,
   display: "flex",
   justifyContent: "space-between",
   gap: 10,
   flexWrap: "wrap",
+  background: "var(--surface)",
 };

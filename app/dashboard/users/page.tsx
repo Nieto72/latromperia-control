@@ -55,9 +55,11 @@ export default function UsersPage() {
             <div
               key={id}
               style={{
-                border: "1px solid #2a2a2a",
+                border: "1px solid var(--border)",
                 borderRadius: 16,
                 padding: 14,
+                background: "var(--card)",
+                boxShadow: "0 16px 40px rgba(0,0,0,0.25)",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
@@ -87,8 +89,9 @@ export default function UsersPage() {
                     style={{
                       padding: 10,
                       borderRadius: 12,
-                      border: "1px solid #333",
-                      background: "transparent",
+                      border: "1px solid var(--border)",
+                      background: "var(--surface)",
+                      color: "var(--foreground)",
                     }}
                   >
                     <option value="" disabled>
@@ -110,8 +113,10 @@ export default function UsersPage() {
 const btn: React.CSSProperties = {
   padding: "10px 12px",
   borderRadius: 12,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   fontWeight: 800,
-  background: "transparent",
+  background: "var(--surface)",
+  color: "var(--foreground)",
   cursor: "pointer",
+  boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
 };

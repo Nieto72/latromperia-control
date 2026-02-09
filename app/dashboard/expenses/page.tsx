@@ -473,7 +473,7 @@ export default function ExpensesPage() {
         </p>
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Filtro por fecha</h3>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           {[
@@ -485,11 +485,11 @@ export default function ExpensesPage() {
             <button
               key={opt.value}
               onClick={() => setRange(opt.value as RangeKey)}
-              style={{
-                ...secondaryButton,
-                background: range === opt.value ? "white" : "transparent",
-                color: range === opt.value ? "#000" : "inherit",
-              }}
+            style={{
+              ...secondaryButton,
+              background: range === opt.value ? "var(--accent)" : "var(--surface)",
+              color: range === opt.value ? "#0b0b0f" : "var(--foreground)",
+            }}
             >
               {opt.label}
             </button>
@@ -513,7 +513,7 @@ export default function ExpensesPage() {
         )}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Nuevo gasto</h3>
 
         <div style={{ display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
@@ -588,7 +588,7 @@ export default function ExpensesPage() {
         {msg && <p style={{ color: msg.includes("✅") ? "#7CFC00" : "#FF6B6B" }}>{msg}</p>}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Nómina rápida</h3>
         <p style={{ opacity: 0.8 }}>
           Marca quién trabajó hoy y registra el pago diario con un clic.
@@ -621,7 +621,7 @@ export default function ExpensesPage() {
         {payrollMsg && <p style={{ color: payrollMsg.includes("✅") ? "#7CFC00" : "#FF6B6B" }}>{payrollMsg}</p>}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Retiro dueño</h3>
         <p style={{ opacity: 0.8 }}>
           Registra el dinero que retiras cuando trabajas para que la caja cuadre.
@@ -646,7 +646,7 @@ export default function ExpensesPage() {
         {ownerMsg && <p style={{ color: ownerMsg.includes("✅") ? "#7CFC00" : "#FF6B6B" }}>{ownerMsg}</p>}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16, display: "grid", gap: 12 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, display: "grid", gap: 12, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>Accesos rápidos</h3>
         <p style={{ opacity: 0.8 }}>
           Carga el arriendo del mes (día 10) o los recibos base con un clic.
@@ -662,7 +662,7 @@ export default function ExpensesPage() {
         {quickMsg && <p style={{ color: quickMsg.includes("✅") ? "#7CFC00" : "#FF6B6B" }}>{quickMsg}</p>}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ marginTop: 0 }}>Resumen mensual</h3>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 10 }}>
           <input
@@ -819,28 +819,29 @@ function toInputDate(date: Date) {
 const inputStyle: React.CSSProperties = {
   padding: 10,
   borderRadius: 10,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
 };
 
 const buttonStyle: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   fontWeight: 700,
-  background: "white",
-  color: "#000",
+  background: "var(--accent)",
+  color: "#0b0b0f",
   cursor: "pointer",
   width: "fit-content",
+  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
 };
 
 const secondaryButton: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
   cursor: "pointer",
   fontWeight: 600,
 };
@@ -848,19 +849,21 @@ const secondaryButton: React.CSSProperties = {
 const pillStyle: React.CSSProperties = {
   padding: "6px 10px",
   borderRadius: 999,
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   fontSize: 12,
   opacity: 0.9,
+  background: "rgba(255,255,255,0.03)",
 };
 
 const rowStyle: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 14,
   padding: 12,
   display: "flex",
   justifyContent: "space-between",
   gap: 12,
   flexWrap: "wrap",
+  background: "var(--surface)",
 };
 
 const checkboxStyle: React.CSSProperties = {
@@ -869,6 +872,7 @@ const checkboxStyle: React.CSSProperties = {
   gap: 8,
   padding: "8px 10px",
   borderRadius: 12,
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   fontSize: 13,
+  background: "var(--surface)",
 };

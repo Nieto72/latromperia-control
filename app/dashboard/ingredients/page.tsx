@@ -260,7 +260,7 @@ export default function IngredientsPage() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gap: 12, border: "1px solid #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ display: "grid", gap: 12, border: "1px solid var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ margin: 0 }}>{editingId ? "Editar ingrediente" : "Nuevo ingrediente"}</h3>
 
         <div style={{ display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}>
@@ -326,7 +326,7 @@ export default function IngredientsPage() {
         {msg && <p style={{ color: msg.includes("✅") ? "#7CFC00" : "#FF6B6B" }}>{msg}</p>}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ marginTop: 0 }}>Listado</h3>
         {loading ? (
           <p>Cargando...</p>
@@ -371,7 +371,7 @@ export default function IngredientsPage() {
         )}
       </div>
 
-      <div style={{ border: "1px solid #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ border: "1px solid var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ marginTop: 0 }}>Ingredientes sin costo</h3>
         {missingCosts.length === 0 ? (
           <p style={{ opacity: 0.8 }}>Todo tiene costo ✅</p>
@@ -394,7 +394,7 @@ export default function IngredientsPage() {
         )}
       </div>
 
-      <div style={{ border: "1px dashed #2a2a2a", borderRadius: 18, padding: 16 }}>
+      <div style={{ border: "1px dashed var(--border)", borderRadius: 18, padding: 16, background: "var(--card)", boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}>
         <h3 style={{ marginTop: 0 }}>Carga inicial</h3>
         <p style={{ opacity: 0.8, marginTop: 4 }}>
           Carga la base de ingredientes con costos y mínimos. Si el ingrediente ya existe, se omite.
@@ -418,33 +418,34 @@ export default function IngredientsPage() {
 const inputStyle: React.CSSProperties = {
   padding: 10,
   borderRadius: 10,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
 };
 
 const buttonStyle: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   fontWeight: 700,
-  background: "white",
-  color: "#000",
+  background: "var(--accent)",
+  color: "#0b0b0f",
   cursor: "pointer",
+  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
 };
 
 const secondaryButton: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
   cursor: "pointer",
   fontWeight: 600,
 };
 
 const rowStyle: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 14,
   padding: 12,
   display: "flex",
@@ -452,4 +453,5 @@ const rowStyle: React.CSSProperties = {
   justifyContent: "space-between",
   gap: 12,
   flexWrap: "wrap",
+  background: "var(--surface)",
 };

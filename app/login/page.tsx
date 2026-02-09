@@ -65,9 +65,10 @@ export default function LoginPage() {
         padding: 40,
         maxWidth: 400,
         margin: "80px auto",
-        border: "1px solid #ddd",
+        border: "1px solid var(--border)",
         borderRadius: 16,
-        fontFamily: "system-ui",
+        background: "var(--card)",
+        boxShadow: "0 18px 40px rgba(0,0,0,0.28)",
       }}
     >
       <h1 style={{ marginBottom: 20 }}>La Trompería – Control</h1>
@@ -82,7 +83,9 @@ export default function LoginPage() {
           padding: 12,
           marginBottom: 12,
           borderRadius: 10,
-          border: "1px solid #ccc",
+          border: "1px solid var(--border)",
+          background: "var(--surface)",
+          color: "var(--foreground)",
         }}
       />
 
@@ -100,7 +103,9 @@ export default function LoginPage() {
           padding: 12,
           marginBottom: 12,
           borderRadius: 10,
-          border: "1px solid #ccc",
+          border: "1px solid var(--border)",
+          background: "var(--surface)",
+          color: "var(--foreground)",
         }}
       />
 
@@ -111,16 +116,18 @@ export default function LoginPage() {
           width: "100%",
           padding: 12,
           borderRadius: 12,
-          border: "1px solid #333",
+          border: "1px solid var(--border)",
           fontWeight: 700,
           cursor: loading ? "not-allowed" : "pointer",
-          background: loading ? "#eee" : "white",
+          background: loading ? "var(--surface)" : "var(--accent)",
+          color: loading ? "var(--muted)" : "#0b0b0f",
+          boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
         }}
       >
         {loading ? "Entrando..." : "Entrar"}
       </button>
 
-      {error && <p style={{ color: "red", marginTop: 14 }}>{error}</p>}
+      {error && <p style={{ color: "#ff6b6b", marginTop: 14 }}>{error}</p>}
     </div>
   );
 }

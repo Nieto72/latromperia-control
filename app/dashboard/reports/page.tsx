@@ -301,8 +301,8 @@ export default function ReportsPage() {
             onClick={() => setRange(option.value)}
             style={{
               ...buttonStyle,
-              background: range === option.value ? "white" : "transparent",
-              color: range === option.value ? "#000" : "inherit",
+              background: range === option.value ? "var(--accent)" : "var(--surface)",
+              color: range === option.value ? "#0b0b0f" : "var(--foreground)",
             }}
           >
             {option.label}
@@ -532,17 +532,20 @@ export default function ReportsPage() {
 const buttonStyle: React.CSSProperties = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid #333",
+  border: "1px solid var(--border)",
   fontWeight: 700,
-  background: "transparent",
-  color: "inherit",
+  background: "var(--surface)",
+  color: "var(--foreground)",
   cursor: "pointer",
+  boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
 };
 
 const cardStyle: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 18,
   padding: 16,
+  background: "var(--card)",
+  boxShadow: "0 16px 40px rgba(0,0,0,0.25)",
 };
 
 const rowStyle: React.CSSProperties = {
@@ -552,7 +555,7 @@ const rowStyle: React.CSSProperties = {
 };
 
 const ticketRow: React.CSSProperties = {
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   borderRadius: 14,
   padding: 12,
   display: "flex",
@@ -560,27 +563,29 @@ const ticketRow: React.CSSProperties = {
   justifyContent: "space-between",
   gap: 12,
   flexWrap: "wrap",
+  background: "var(--surface)",
 };
 
 const inputStyle: React.CSSProperties = {
   padding: 10,
   borderRadius: 10,
-  border: "1px solid #333",
-  background: "transparent",
-  color: "inherit",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
+  color: "var(--foreground)",
 };
 
 const pillStyle: React.CSSProperties = {
   padding: "6px 10px",
   borderRadius: 999,
-  border: "1px solid #2a2a2a",
+  border: "1px solid var(--border)",
   fontSize: 12,
   opacity: 0.9,
+  background: "rgba(255,255,255,0.03)",
 };
 
 const warningStyle: React.CSSProperties = {
-  border: "1px solid #6b3b3b",
-  background: "rgba(255, 107, 107, 0.12)",
+  border: "1px solid rgba(255, 90, 95, 0.45)",
+  background: "rgba(255, 90, 95, 0.12)",
   borderRadius: 14,
   padding: 12,
 };
@@ -594,7 +599,7 @@ const barRow: React.CSSProperties = {
 
 const barWrap: React.CSSProperties = {
   height: 8,
-  background: "#1f1f1f",
+  background: "rgba(255,255,255,0.08)",
   borderRadius: 999,
   overflow: "hidden",
 };

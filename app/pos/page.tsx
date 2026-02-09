@@ -365,7 +365,7 @@ export default function POSPage() {
 
         @media (max-width: 820px) { .posGrid { grid-template-columns: 1fr; } }
 
-        .card { border: 1px solid var(--border); border-radius: 16px; padding: 12px; background: var(--card); }
+        .card { border: 1px solid var(--border); border-radius: 16px; padding: 12px; background: var(--card); box-shadow: 0 18px 40px rgba(0,0,0,0.28); }
 
         .productsGrid {
           display: grid;
@@ -451,9 +451,11 @@ export default function POSPage() {
           style={{
             padding: 12,
             borderRadius: 14,
-            border: "1px solid #333",
+            border: "1px solid var(--border)",
             minWidth: 240,
             flex: "1 1 240px",
+            background: "var(--surface)",
+            color: "var(--foreground)",
           }}
         />
 
@@ -684,7 +686,7 @@ export default function POSPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar: Nombre..."
-                style={{ padding: 12, borderRadius: 14, border: "1px solid #333", flex: "1 1 220px" }}
+                style={{ padding: 12, borderRadius: 14, border: "1px solid var(--border)", flex: "1 1 220px", background: "var(--surface)", color: "var(--foreground)" }}
               />
               <button onClick={loadOpenOrders} style={{ ...actionBtn, fontWeight: 900 }}>
                 Recargar
@@ -700,10 +702,10 @@ export default function POSPage() {
                     key={o.id}
                     onClick={() => selectOrder(o.id)}
                     style={{
-                      border: "1px solid #333",
+                      border: "1px solid var(--border)",
                       borderRadius: 14,
                       padding: 12,
-                    background: "var(--card)",
+                      background: "var(--card)",
                       textAlign: "left",
                       cursor: "pointer",
                     }}
@@ -736,6 +738,7 @@ const productBtn: CSSProperties = {
   color: "var(--foreground)",
   cursor: "pointer",
   textAlign: "left",
+  boxShadow: "0 12px 24px rgba(0,0,0,0.25)",
 };
 
 const payBtn: CSSProperties = {
@@ -746,6 +749,7 @@ const payBtn: CSSProperties = {
   color: "var(--foreground)",
   cursor: "pointer",
   fontWeight: 900,
+  boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
 };
 
 const pillBtn: CSSProperties = {
@@ -770,6 +774,7 @@ const actionBtn: CSSProperties = {
   background: "var(--accent)",
   color: "#0b0b0f",
   cursor: "pointer",
+  boxShadow: "0 12px 24px rgba(255, 90, 95, 0.25)",
 };
 
 const minusBtn: CSSProperties = {

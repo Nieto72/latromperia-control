@@ -18,9 +18,9 @@ function TopBarItem({ href, label, active }: TopBarItemProps) {
         padding: "10px 12px",
         borderRadius: 12,
         textDecoration: "none",
-        color: "white",
-        border: active ? "1px solid rgba(255,255,255,0.35)" : "1px solid rgba(255,255,255,0.12)",
-        background: active ? "rgba(255,255,255,0.08)" : "transparent",
+        color: "var(--foreground)",
+        border: active ? "1px solid var(--accent)" : "1px solid var(--border)",
+        background: active ? "rgba(255,90,95,0.2)" : "var(--surface)",
         fontWeight: 700,
       }}
     >
@@ -36,11 +36,13 @@ export default function TopBar({ title }: { title: string }) {
     <div
       style={{
         padding: 16,
-        borderBottom: "1px solid rgba(255,255,255,0.12)",
+        borderBottom: "1px solid var(--border)",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         gap: 16,
+        background: "rgba(19,19,26,0.6)",
+        backdropFilter: "blur(12px)",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
