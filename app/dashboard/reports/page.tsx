@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { collection, deleteDoc, doc, getDocs, orderBy, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import {
   ingredientConverter,
@@ -26,8 +26,6 @@ export default function ReportsPage() {
   const [range, setRange] = useState<RangeKey>("today");
   const [sales, setSales] = useState<SaleRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cleaning, setCleaning] = useState(false);
-  const [cleanMsg, setCleanMsg] = useState("");
   const [products, setProducts] = useState<WithId<ProductDoc>[]>([]);
   const [ingredients, setIngredients] = useState<WithId<IngredientDoc>[]>([]);
   const [recipes, setRecipes] = useState<WithId<RecipeDoc>[]>([]);
@@ -86,37 +84,6 @@ export default function ReportsPage() {
     void fetchCatalogs();
   }, []);
 
-  const cleanTodayTestData = async () => {
-    setCleanMsg("");
-    const ok = window.confirm(
-      "¿Borrar pedidos y ventas de HOY? Esto no se puede deshacer."
-    );
-    if (!ok) return;
-
-    setCleaning(true);
-    try {
-      const start = new Date();
-      start.setHours(0, 0, 0, 0);
-
-      const ordersCol = collection(db, "orders");
-      const salesCol = collection(db, "sales");
-      const ordersSnap = await getDocs(query(ordersCol, where("createdAt", ">=", start)));
-      const salesSnap = await getDocs(query(salesCol, where("createdAt", ">=", start)));
-
-      for (const docSnap of ordersSnap.docs) {
-        await deleteDoc(doc(db, "orders", docSnap.id));
-      }
-      for (const docSnap of salesSnap.docs) {
-        await deleteDoc(doc(db, "sales", docSnap.id));
-      }
-
-      setCleanMsg("Datos de hoy eliminados ✅");
-    } catch (err) {
-      setCleanMsg(err instanceof Error ? err.message : "No se pudo limpiar.");
-    } finally {
-      setCleaning(false);
-    }
-  };
 
   const avgPriceGuess = useMemo(() => {
     if (products.length === 0) return 0;
@@ -341,17 +308,6 @@ export default function ReportsPage() {
             {option.label}
           </button>
         ))}
-      </div>
-
-      <div style={cardStyle}>
-        <h3 style={{ marginTop: 0 }}>Pruebas (temporal)</h3>
-        <p style={{ opacity: 0.8 }}>
-          Borra pedidos y ventas creados hoy mientras haces pruebas.
-        </p>
-        <button onClick={cleanTodayTestData} disabled={cleaning} style={buttonStyle}>
-          {cleaning ? "Borrando..." : "Limpiar pruebas de hoy"}
-        </button>
-        {cleanMsg && <p style={{ opacity: 0.8 }}>{cleanMsg}</p>}
       </div>
 
         <div style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
