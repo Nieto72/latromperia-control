@@ -19,9 +19,14 @@
 }
 
 body {
-  background: radial-gradient(1200px 600px at 10% -20%, rgba(255, 90, 95, 0.12), transparent 60%),
+  background-image:
+    radial-gradient(1200px 600px at 10% -20%, rgba(255, 90, 95, 0.12), transparent 60%),
     radial-gradient(900px 500px at 110% 10%, rgba(255, 209, 102, 0.12), transparent 55%),
-    var(--background);
+    linear-gradient(rgba(247, 245, 242, 0.92), rgba(247, 245, 242, 0.92)),
+    url("/tromperia-logo.png");
+  background-size: auto, auto, auto, 220px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-position: center -120px, right -120px top -60px, center, center;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
